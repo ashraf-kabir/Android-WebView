@@ -24,8 +24,10 @@ public class MainActivity extends Activity {
         webSettings.setJavaScriptEnabled(true);
 
         // REMOTE RESOURCE
-        myWebView.loadUrl("http://ieeebracu.com/");
+        myWebView.loadUrl("http://lms.bracu.ac.bd");
+
         myWebView.setWebViewClient(new WebViewClient() {
+            //pdf support
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.endsWith(".pdf")) {
