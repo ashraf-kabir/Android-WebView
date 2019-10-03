@@ -2,6 +2,8 @@ package com.example.app;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -23,7 +25,17 @@ public class MainActivity extends Activity {
 
         // REMOTE RESOURCE
         mWebView.loadUrl("http://ieeebracu.com/");
-        mWebView.setWebViewClient(new WebViewClient());
+        mWebView.setWebViewClient(new WebViewClient() {
+            public boolean shouldOverrideUrlLoading (WebView view, String url) {
+                if (url.endsWith(".pdf")) {
+                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    // if want to download pdf manually create AsyncTask here
+                    // and download file
+                    return true;
+                }
+                return false;
+            }
+        });
 
         // LOCAL RESOURCE
         // mWebView.loadUrl("file:///android_asset/index.html");
