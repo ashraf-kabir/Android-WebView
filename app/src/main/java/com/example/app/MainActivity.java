@@ -11,21 +11,21 @@ import android.webkit.WebViewClient;
 
 public class MainActivity extends Activity {
 
-    private WebView mWebView;
+    private WebView myWebView;
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mWebView = findViewById(R.id.activity_main_webview);
-        mWebView.setWebViewClient(new WebViewClient());
-        WebSettings webSettings = mWebView.getSettings();
+        myWebView = findViewById(R.id.activity_main_webview);
+        myWebView.setWebViewClient(new WebViewClient());
+        WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
 
         // REMOTE RESOURCE
-        mWebView.loadUrl("http://ieeebracu.com/");
-        mWebView.setWebViewClient(new WebViewClient() {
+        myWebView.loadUrl("http://ieeebracu.com/");
+        myWebView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.endsWith(".pdf")) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
@@ -43,8 +43,8 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (mWebView.canGoBack()) {
-            mWebView.goBack();
+        if (myWebView.canGoBack()) {
+            myWebView.goBack();
         } else {
             super.onBackPressed();
         }
