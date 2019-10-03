@@ -26,6 +26,7 @@ public class MainActivity extends Activity {
         // REMOTE RESOURCE
         myWebView.loadUrl("http://ieeebracu.com/");
         myWebView.setWebViewClient(new WebViewClient() {
+            @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 if (url.endsWith(".pdf")) {
                     startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
