@@ -5,9 +5,11 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 public class MainActivity extends Activity {
 
@@ -24,7 +26,18 @@ public class MainActivity extends Activity {
         webSettings.setJavaScriptEnabled(true);
 
         // REMOTE RESOURCE
-        myWebView.loadUrl("http://lms.bracu.ac.bd");
+        myWebView.loadUrl("https://duckduckgo.com/");
+
+        Button button = (Button) findViewById(R.id.button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+
+            public void onClick(View v) {
+
+                myWebView.reload();
+
+            }
+        });
 
         myWebView.setWebViewClient(new WebViewClient() {
             //pdf support
