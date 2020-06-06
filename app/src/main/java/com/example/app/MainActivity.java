@@ -12,6 +12,7 @@ import android.webkit.WebViewClient;
 public class MainActivity extends Activity {
 
     private WebView myWebView;
+    String Url = "https://www.google.com/";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -22,9 +23,11 @@ public class MainActivity extends Activity {
         myWebView.setWebViewClient(new WebViewClient());
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
 
         // REMOTE RESOURCE
-        myWebView.loadUrl("http://lms.bracu.ac.bd");
+        myWebView.loadUrl(Url);
 
         myWebView.setWebViewClient(new WebViewClient() {
             //pdf support
