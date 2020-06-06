@@ -22,20 +22,19 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         myWebView = findViewById(R.id.activity_main_webview);
         myWebView.setWebViewClient(new WebViewClient());
+
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
+        webSettings.setBuiltInZoomControls(true);
+        webSettings.setDisplayZoomControls(false);
 
         // REMOTE RESOURCE
         myWebView.loadUrl("https://duckduckgo.com/");
 
         Button button = (Button) findViewById(R.id.button);
-
         button.setOnClickListener(new View.OnClickListener() {
-
             public void onClick(View v) {
-
                 myWebView.reload();
-
             }
         });
 
