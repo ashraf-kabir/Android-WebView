@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -12,7 +13,7 @@ import android.webkit.WebViewClient;
 public class MainActivity extends Activity {
 
     private WebView myWebView;
-    String Url = "https://www.google.com/";
+    String Url = "http://ieeebracu.com/";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -28,6 +29,19 @@ public class MainActivity extends Activity {
 
         // REMOTE RESOURCE
         myWebView.loadUrl(Url);
+
+        //SwipeRefreshLayout
+        final SwipeRefreshLayout finalMySwipeRefreshLayout1;
+        finalMySwipeRefreshLayout1 = findViewById(R.id.swiperefresh);
+        finalMySwipeRefreshLayout1.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // start refresh
+                myWebView.loadUrl(myWebView.getUrl());
+                // stop the refreshing
+                finalMySwipeRefreshLayout1.setRefreshing(false);
+            }
+        });
 
         myWebView.setWebViewClient(new WebViewClient() {
             //pdf support
