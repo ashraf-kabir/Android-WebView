@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.WebSettings;
@@ -22,7 +23,7 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     private WebView myWebView;
-    String Url = "https://www.youtube.com/";
+    String Url = "https://api-inovace360.com/clients/dashboard/";
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -35,6 +36,13 @@ public class MainActivity extends Activity {
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setDisplayZoomControls(false);
+        webSettings.setSaveFormData(true);
+        webSettings.setAppCacheEnabled(true);
+        webSettings.setDomStorageEnabled(true);
+        webSettings.setSavePassword(true);
+
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);
 
         // REMOTE RESOURCE
         myWebView.loadUrl(Url);
@@ -51,30 +59,6 @@ public class MainActivity extends Activity {
                 finalMySwipeRefreshLayout1.setRefreshing(false);
             }
         });
-
-//        myWebView.setWebViewClient(new WebViewClient() {
-//            //pdf support
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                if (url.endsWith(".pdf")) {
-//                    startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
-//                    // if want to download pdf manually create AsyncTask here
-//                    // and download file
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
-
-//        myWebView.setDownloadListener(new DownloadListener() {
-//            public void onDownloadStart(String url, String userAgent,
-//                                        String contentDisposition, String mimetype,
-//                                        long contentLength) {
-//                Intent i = new Intent(Intent.ACTION_VIEW);
-//                i.setData(Uri.parse(url));
-//                startActivity(i);
-//            }
-//        });
 
         myWebView.setDownloadListener(new DownloadListener() {
             @Override
