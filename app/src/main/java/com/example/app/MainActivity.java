@@ -15,6 +15,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.webkit.CookieManager;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -23,7 +24,8 @@ import android.widget.Toast;
 public class MainActivity extends Activity {
 
     private WebView myWebView;
-    String Url = "https://api-inovace360.com/clients/dashboard/";
+    String Url = "https://www.google.com/";
+
 
     @SuppressLint("SetJavaScriptEnabled")
     @Override
@@ -31,7 +33,22 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         myWebView = findViewById(R.id.activity_main_webview);
-        myWebView.setWebViewClient(new WebViewClient());
+        myWebView.setWebViewClient(new WebViewClient() {
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                view.loadUrl(url);
+//                return true;
+//            }
+
+            public void onPageFinished(WebView view, String url) {
+                String username = "YOUR_USERNAME";
+                String password = "YOUR_PASSWORD";
+                myWebView.loadUrl("javascript:(function() { document.getElementById('username').value = '" + username + "'; ;})()");
+                myWebView.loadUrl("javascript:(function() { document.getElementById('password').value = '" + password + "'; ;})()");
+//                myWebView.loadUrl("javascript:(function() { var z = document.getElementById('signInButton').click(); })()");
+            }
+        });
+
+
         WebSettings webSettings = myWebView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webSettings.setBuiltInZoomControls(true);
@@ -40,6 +57,8 @@ public class MainActivity extends Activity {
         webSettings.setAppCacheEnabled(true);
         webSettings.setDomStorageEnabled(true);
         webSettings.setSavePassword(true);
+        webSettings.setAppCachePath(getApplicationContext().getFilesDir().getAbsolutePath() + "/cache");
+        webSettings.setDatabasePath(getApplicationContext().getFilesDir().getAbsolutePath() + "/databases");
 
         CookieManager cookieManager = CookieManager.getInstance();
         cookieManager.setAcceptCookie(true);
@@ -70,7 +89,7 @@ public class MainActivity extends Activity {
                 request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url, contentDisposition, mimetype));
                 DownloadManager dm = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
                 dm.enqueue(request);
-                Toast.makeText(getApplicationContext(), "Downloading...", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Downloading file...", Toast.LENGTH_SHORT).show();
                 registerReceiver(onComplete, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
             }
             final BroadcastReceiver onComplete = new BroadcastReceiver() {
